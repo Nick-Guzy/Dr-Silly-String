@@ -25,7 +25,7 @@ namespace Factory.Controllers
     {
       Tag thisTag = _db.Tags
           .Include(tag => tag.JoinEntities)
-          .ThenInclude(join => join.Item)
+          .ThenInclude(join => join.Machine)
           .FirstOrDefault(tag => tag.TagId == id);
       return View(thisTag);
     }
@@ -43,22 +43,22 @@ namespace Factory.Controllers
       return RedirectToAction("Index");
     }
 
-    public ActionResult AddItem(int id)
+    public ActionResult AddMachine(int id)
     {
       Tag thisTag = _db.Tags.FirstOrDefault(tags => tags.TagId == id);
-      ViewBag.ItemId = new SelectList(_db.Items, "ItemId", "Description");
+      ViewBag.MachineId = new SelectList(_db.Machines, "MachineId", "Description");
       return View(thisTag);
     }
 
     [HttpPost]
-    public ActionResult AddItem(Tag tag, int itemId)
+    public ActionResult AddMachine(Tag tag, int machineId)
     {
       #nullable enable
-      ItemTag? joinEntity = _db.ItemTags.FirstOrDefault(join => (join.ItemId == itemId && join.TagId == tag.TagId));
+      MachineTag? joinEntity = _db.MachineTags.FirstOrDefault(join => (join.MachineId == machineId && join.TagId == tag.TagId));
       #nullable disable
-      if (joinEntity == null && itemId != 0)
+      if (joinEntity == null && machineId != 0)
       {
-        _db.ItemTags.Add(new ItemTag() { ItemId = itemId, TagId = tag.TagId });
+        _db.MachineTags.Add(new MachineTag() { MachineId = machineId, TagId = tag.TagId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = tag.TagId });
@@ -96,8 +96,8 @@ namespace Factory.Controllers
     [HttpPost]
     public ActionResult DeleteJoin(int joinId)
     {
-      ItemTag joinEntry = _db.ItemTags.FirstOrDefault(entry => entry.ItemTagId == joinId);
-      _db.ItemTags.Remove(joinEntry);
+      MachineTag joinEntry = _db.MachineTags.FirstOrDefault(entry => entry.MachineTagId == joinId);
+      _db.MachineTags.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
