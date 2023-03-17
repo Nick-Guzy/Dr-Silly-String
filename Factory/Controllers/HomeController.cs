@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.Models;
+using Factory.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ToDoList.Controllers
+namespace Factory.Controllers
 {
     public class HomeController : Controller
     {
-      private readonly ToDoListContext _db;
+      private readonly FactoryContext _db;
 
-      public HomeController(ToDoListContext db)
+      public HomeController(FactoryContext db)
       {
         _db = db;
       }
@@ -17,10 +17,10 @@ namespace ToDoList.Controllers
       [HttpGet("/")]
       public ActionResult Index()
       {
-        Category[] cats = _db.Categories.ToArray();
+        Engineer[] engins = _db.Engineers.ToArray();
         Item[] items = _db.Items.ToArray();
         Dictionary<string,object[]> model = new Dictionary<string, object[]>();
-        model.Add("categories", cats);
+        model.Add("engineers", engins);
         model.Add("items", items);
         return View(model);
       }

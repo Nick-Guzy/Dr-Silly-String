@@ -1,17 +1,17 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.Models;
+using Factory.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ToDoList.Controllers
+namespace Factory.Controllers
 {
   public class ItemsController : Controller
   {
-    private readonly ToDoListContext _db;
+    private readonly FactoryContext _db;
 
-    public ItemsController(ToDoListContext db)
+    public ItemsController(FactoryContext db)
     {
       _db = db;
     }
