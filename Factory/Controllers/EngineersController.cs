@@ -37,8 +37,8 @@ namespace Factory.Controllers
     public ActionResult Details(int id)
     {
       Engineer thisEngineer = _db.Engineers
-                                .Include(engin => engin.Items)
-                                .ThenInclude(item => item.JoinEntities)
+                                .Include(engin => engin.Machines)
+                                .ThenInclude(machine => machine.JoinEntities)
                                 .ThenInclude(join => join.Tag)
                                 .FirstOrDefault(engineer => engineer.EngineerId == id);
       return View(thisEngineer);
