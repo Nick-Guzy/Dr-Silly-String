@@ -1,11 +1,11 @@
 
 using System.Collections.Generic;
 
-namespace ToDoList.Models
+namespace Factory.Models
 {
-  public class Category
+  public class Engineer
   {
-    public int CategoryId { get; set; }
+    public int EngineerId { get; set; }
     public string Name { get; set; }
     public List<Item> Items { get; set; }
   }
