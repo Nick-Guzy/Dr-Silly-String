@@ -2,9 +2,9 @@
   Layout = "_Layout";
 }
 
-@model Factory.Models.Item
+@model Factory.Models.Machine
 
-<h4>Add a new item</h4>
+<h4>Add a new machine</h4>
 
 <p>@Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
 <p>@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
@@ -15,8 +15,8 @@
   @Html.TextBoxFor(model => model.Description)
 
   @Html.LabelFor(model => model.Category)
-  @Html.DropDownList("CategoryId")
+  @Html.DropDownList("EngineerId")
 
-  <input type="submit" value="Add new item" class="btn btn-default" />
+  <input type="submit" value="Add new machine" class="btn btn-default" />
 }
-<p>@Html.ActionLink("Show all items", "Index")</p>
+<p>@Html.ActionLink("Show all machines", "Index")</p>
