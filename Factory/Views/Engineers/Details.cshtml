@@ -10,31 +10,31 @@
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 
-@if(@Model.Items.Count == 0)
+@if(@Model.Machines.Count == 0)
 {
-  <p>This engineer does not contain any items</p>
+  <p>This engineer does not contain any machine</p>
 }
 else
 {
-  <h4>Items the engineer contains:</h4>
+  <h4>Machines the engineer contains:</h4>
   <ul>
-  @foreach(Item item in Model.Items)
+  @foreach(Machine machine in Model.Machines)
   {
-    string tags = "";
-    @if(item.JoinEntities.Count == 0)
+    string machines = "";
+    @if(machine.JoinEntities.Count == 0)
     {
-      tags = "This item does not have any tags.";
+      machines = "This engineer does not have any machines.";
     }
     else
     {
-      List<string> tagList = new List<string>();
-      @foreach(ItemTag join in item.JoinEntities)
+      List<string> machineList = new List<string>();
+      @foreach(MachineEngineer join in machine.JoinEntities)
       {
-        tagList.Add(join.Tag.Title);
+        machineList.Add(join.Machine.Description);
       }
-      tags = String.Join(", ", tagList);
+      machines = String.Join(", ", machineList);
     }
-    <li>@item.Description | Tags: @tags</li>
+    <li>@machine.Description | Machines: @machines</li>
   }
   </ul>
 }
@@ -42,4 +42,4 @@ else
 <p>@Html.ActionLink("Back to engineers", "Index")</p>
 <p>@Html.ActionLink("Edit Engineers", "Edit", new { id = Model.EngineerId })</p>
 <p>@Html.ActionLink("Delete Engineer", "Delete", new { id = Model.EngineerId })</p>
-<p>@Html.ActionLink("Add new item", "Create", "Items")</p>
+<p>@Html.ActionLink("Add new machine", "Create", "Machines")</p>

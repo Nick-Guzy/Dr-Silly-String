@@ -26,7 +26,7 @@ namespace Factory.Controllers
 
     public ActionResult Create()
     {
-      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name", "EngDetails");
       return View();
     }
 
@@ -49,9 +49,9 @@ namespace Factory.Controllers
     public ActionResult Details(int id)
     {
       Machine thisMachine = _db.Machines
-          .Include(machine => machine.Category)
+          .Include(machine => machine.Engineer)
           .Include(machine => machine.JoinEntities)
-          .ThenInclude(join => join.Tag)
+          .ThenInclude(join => join.Engineer)
           .FirstOrDefault(machine => machine.MachineId == id);
       return View(thisMachine);
     }
@@ -86,22 +86,22 @@ namespace Factory.Controllers
       return RedirectToAction("Index");
     }
 
-    public ActionResult AddTag(int id)
+    public ActionResult AddEngineer(int id)
     {
       Machine thisMachine = _db.Machines.FirstOrDefault(machines => machines.MachineId == id);
-      ViewBag.TagId = new SelectList(_db.Tags, "TagId", "Title");
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Title");
       return View(thisMachine);
     }
 
     [HttpPost]
-    public ActionResult AddTag(Machine machine, int tagId)
+    public ActionResult AddEngineer(Machine machine, int engineerId)
     {
       #nullable enable
-      MachineTag? joinEntity = _db.MachineTags.FirstOrDefault(join => (join.TagId == tagId && join.MachineId == machine.MachineId));
+      MachineEngineer? joinEntity = _db.MachineEngineer.FirstOrDefault(join => (join.EngineerId == engineerId && join.MachineId == machine.MachineId));
       #nullable disable
-      if (joinEntity == null && tagId != 0)
+      if (joinEntity == null && engineerId != 0)
       {
-        _db.MachineTags.Add(new MachineTag() { TagId = tagId, MachineId = machine.MachineId });
+        _db.MachineEngineer.Add(new MachineEngineer() { EngineerId = engineerId, MachineId = machine.MachineId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = machine.MachineId });
@@ -110,8 +110,8 @@ namespace Factory.Controllers
     [HttpPost]
     public ActionResult DeleteJoin(int joinId)
     {
-      MachineTag joinEntry = _db.MachineTags.FirstOrDefault(entry => entry.MachineTagId == joinId);
-      _db.MachineTags.Remove(joinEntry);
+      MachineEngineer joinEntry = _db.MachineEngineer.FirstOrDefault(entry => entry.MachineEngineerId == joinId);
+      _db.MachineEngineer.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     } 
