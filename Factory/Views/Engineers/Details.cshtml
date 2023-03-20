@@ -28,28 +28,6 @@ else
     }
   }
   </ul>
-
-  @* <h4>Machines the engineer contains:</h4>
-  <ul>
-  @foreach(MachineEngineer machine in Model.JoinEntities)
-  {
-    string machines = "";
-    @if(machine.JoinEntities.Count == 0)
-    {
-      machines = "This engineer does not have any machines.";
-    }
-    else
-    {
-      List<string> machineList = new List<string>();
-      @foreach(MachineEngineer join in machine.JoinEntities)
-      {
-        machineList.Add(join.Machine.Description);
-      }
-      machines = String.Join(", ", machineList);
-    }
-    <li>@machine.Description | Machines: @machines</li>
-  }
-  </ul> *@
 }
 
 <p>@Html.ActionLink("Back to engineers", "Index")</p>
