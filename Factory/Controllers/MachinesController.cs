@@ -26,7 +26,7 @@ namespace Factory.Controllers
 
     public ActionResult Create()
     {
-      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name", "EngDetails");
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name", "EngineerDetails");
       return View();
     }
 
@@ -35,7 +35,7 @@ namespace Factory.Controllers
     {
       if (!ModelState.IsValid)
       {
-          ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
+          ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name", "EngineerDetails");
           return View(machine);
       }
       else
@@ -59,7 +59,7 @@ namespace Factory.Controllers
     public ActionResult Edit(int id)
     {
       Machine thisMachine = _db.Machines.FirstOrDefault(machine => machine.MachineId == id);
-      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name", "EngineerDetails");
       return View(thisMachine);
     }
 
@@ -89,7 +89,7 @@ namespace Factory.Controllers
     public ActionResult AddEngineer(int id)
     {
       Machine thisMachine = _db.Machines.FirstOrDefault(machines => machines.MachineId == id);
-      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Title");
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name", "EngineerDetails");
       return View(thisMachine);
     }
 

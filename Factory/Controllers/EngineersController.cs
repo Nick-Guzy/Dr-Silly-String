@@ -38,8 +38,8 @@ namespace Factory.Controllers
     public ActionResult Details(int id)
     {
       Engineer thisEngineer = _db.Engineers
-        .Include(engin => engin.Machines)
-        .ThenInclude(machine => machine.JoinEntities)
+        .Include(join => join.JoinEntities)
+        .ThenInclude(machine => machine.Machine)
         .FirstOrDefault(engineer => engineer.EngineerId == id);
       return View(thisEngineer);
     }
